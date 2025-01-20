@@ -1,0 +1,63 @@
+.data
+	nums: .space 32
+	newline : .asciiz "\n"
+
+.text
+
+main:
+	addi $s0, $zero, -2		#s0= -2
+	addi $s1, $zero, 3		#s1= 3
+	addi $s2, $zero, 6		#...
+	addi $s3, $zero, 4
+	addi $s4, $zero, 8
+	addi $s5, $zero, 126
+	addi $s6, $zero, -131
+	addi $s7, $zero, 17
+	addi $t0, $zero, 0		#st0= index
+	
+	sw $s0, nums($t0)	#nums at index 0 = s0
+	addi $t0, $t0, 4	#aumentar index
+	sw $s1, nums($t0)	#nums at index1 = s1
+	addi $t0, $t0, 4	#aumentar index
+	sw $s2, nums($t0)	#...
+	addi $t0, $t0, 4
+	sw $s3, nums($t0)
+	addi $t0, $t0, 4
+	sw $s4, nums($t0)
+	addi $t0, $t0, 4
+	sw $s5, nums($t0)
+	addi $t0, $t0, 4
+	sw $s6, nums($t0)
+	addi $t0, $t0, 4
+	sw $s7, nums($t0)
+	addi $t0, $t0, 4
+	subi $t0, $t0, 32	#index back to zero
+
+
+while:
+		beq $t0, 32, endwhile
+		lw $t1, nums($t0)	#t1=nums at index t0
+		addi $t0, $t0, 4	#index +4
+
+		div $t2, $t1, 2		#div by 2
+		mfhi $t3		#remainder in $t3
+
+		syscall
+
+if:		
+		bne $t3, 0, exit	#if remainder !=0 exit
+ 
+  		li $v0, 1
+ 		addi $a0, $t1, 0 #Print the no
+		syscall
+
+ 		li $v0,11
+		lw $a0, ',' #Print comma
+		syscall
+		j if
+exit:
+		
+		j while
+endwhile:
+			li	$v0,10		#exit program
+			syscall

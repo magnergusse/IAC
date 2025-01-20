@@ -1,0 +1,28 @@
+.data
+.text
+
+main:
+
+li $t0, 0xf0000000
+li $t1, 0x12345678
+
+and $t2, $t1, $t0
+srl $a0, $t2, 28 		#shift right 28
+
+li $v0, 34
+syscall
+
+li $a0,' '
+li $v0, 11
+syscall
+
+li $t0, 0x0f000000
+and $t2, $t1, $t0
+srl $a0, $t2, 24 		#shift right 24
+
+li $v0, 34
+syscall
+
+li $a0,' '
+li $v0, 11
+syscall

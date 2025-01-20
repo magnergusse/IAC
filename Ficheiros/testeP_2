@@ -1,0 +1,41 @@
+.data
+string: .asciiz "MAgner  1234"
+final:  .asciiz "O nr de alfas e' "
+final2: .asciiz "alfas"
+.text
+
+#$t3= str[i]	$s1=string		$t0=i		$t1= alfas
+main:
+		la $a0, string		#s0=string
+		jal alfas
+		
+		la $a0, final #print fim1
+		li $v0, 4
+		syscall
+										
+		move $a0, $t1		#print nr of alfas 
+		li $v0, 1
+		syscall
+		
+		li $v0,10		#exit program
+		syscall		
+
+alfas:								
+		li $t1, 0		#$t1=alfas=0
+		li $t0, 0		#$t0=i=0
+		
+while:		addu $t2, $a0, $t0	#t1=str+i=&str[i]	
+		lb $t3, 0($t2)		#t3= string[t2]
+		beq $t3, '\0', exit
+		
+		
+		
+if:		blt $t3, 'A', endif			#if less than A
+		bgt $t3, 'z', endif			#if greater than z
+		addi $t1, $t1, 1		#alfas ++ 	
+	
+endif:
+		addi $t0, $t0, 1		#index++
+		j while
+		
+exit:	 jr $ra															

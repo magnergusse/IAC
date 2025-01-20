@@ -1,0 +1,17 @@
+.data
+
+.text
+
+main: 
+li $t0, 0x12345678
+li $t1, 0x11111111
+
+and $t2, $t1, $t0
+or $t3, $t1, $t0
+xor $t4, $t1, $t0
+nor $t5, $t1, $0
+nor $t6, $t1, $t0
+
+add $a0, $t2, $0 
+li $v0, 1
+syscall

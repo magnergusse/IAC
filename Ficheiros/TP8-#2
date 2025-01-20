@@ -1,0 +1,29 @@
+	.data
+	
+minus: .asciiz "helloworld"
+maius: .space 20
+
+.text
+
+main:
+
+		li $t0, 0 		#i=0=$t0
+		la $t1, minus
+
+while:		add $t2, $t1, $t0	#$t2=&minus[i]
+		lb $t3, 0($t2)
+		beq $t3, '\0', endwhile	#while(minus[i]!='\0')
+		addi $t4, $t3, 'A'
+		subi $t4, $t4, 'a'  #t4 = minusi + A -a 
+		
+		la $t6, maius
+		addu $t5,$t6,$t0 #t5 = &maiusi
+		sb $t4, 0($t5)  
+		
+		addi $t0, $t0, 1	#i++
+	j while
+endwhile:
+
+		la $a0, maius
+		li $v0, 4
+		syscall

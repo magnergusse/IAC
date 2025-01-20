@@ -1,0 +1,36 @@
+.data
+
+nums: .word -2, 3, 6, 4, 8, 126, -131, 17
+
+.text
+
+main:		
+		li $s0, 8
+		addi $t0, $0, 0
+		
+		
+	for:	beq $t0, 32, exit
+		la $a0 nums
+		addu $t1, $a0, $t0
+		lw $t2, 0($t1)
+		
+		addi $t0, $t0, 4
+		div $t3, $t2, 2
+		mfhi $t4
+		
+	if:	bne $t4, 0, endif
+		move $a0, $t2
+		li $v0, 1
+		syscall
+		
+		li $a0, ','
+		li $v0, 11
+		syscall
+	endif:
+	
+		
+		j for
+	exit:
+	
+		li $v0, 10
+		syscall																	

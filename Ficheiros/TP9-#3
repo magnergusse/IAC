@@ -1,0 +1,24 @@
+.data
+
+.text
+
+
+#dst-$a0	src=$a1		aux=$s0
+strcat: 	addiu $sp, $sp, -8
+		sw    $ra, 0($sp)
+		sw    $s0, 4($sp)
+		move  $s0, $s0		#aux=dst
+		
+	while:  lb	$t0, 0($a0)
+		beq 	$t0, '\0', endwhile
+		addiu	$a0, $a0, 1		#dst++
+		j while
+	endwhile:
+		
+			jal strcpy	#strcopy(dst, stc)
+			
+				move $v0, $s0	#return aux
+				lw $s0, 4($sp)
+				lw $ra, 0($sp)
+				addiu $sp, $sp, 8
+				jr $ra	
